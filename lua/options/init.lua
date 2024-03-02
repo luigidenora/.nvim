@@ -2,8 +2,8 @@ vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.stdpath("data") .. "/mason/bin"
 vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$HOME") .. "/.flutter/bin"
 vim.env.PATH = vim.env.PATH .. ":" .. vim.fn.expand("$HOME") .. "/.rbenv/shims"
 
-vim.opt.guifont = {"JetBrainsMonoMedium Nerd Font", ":h14"}
--- vim.opt.guifont = {"Hack", ":h16"}
+-- vim.opt.guifont = {"JetBrainsMonoMedium Nerd Font", ":h14"}
+vim.opt.guifont = {"Hack", ":h14"}
 vim.opt.guicursor = "n-v-c-sm:hor25,i-ci-ve:ver25,r-cr-o:block"
 vim.opt.autoindent = true
 
@@ -52,11 +52,12 @@ vim.opt.updatetime = 250
 -- when cursor reaches end/beginning of line
 vim.opt.whichwrap:append "<>[]hl"
 
-vim.g.mapleader = "\\"
+vim.g.mapleader = " "
 vim.g.luasnippets_path = vim.fn.expand("$HOME") .. "/.config/nvim/lua/snippets"
 -- vim.g.editorconfig = false
 
 if vim.g.neovide then
+  vim.g.neovide_scale_factor = 0.8
   vim.g.neovide_input_use_logo = true
   vim.g.neovide_cursor_trail_length = 0.05
   vim.g.neovide_remember_window_size = true
