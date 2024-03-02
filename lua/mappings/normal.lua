@@ -21,8 +21,17 @@ map("<leader>w", hop.hint_words, "hop words")
 map("<leader>q", hop.hint_lines, "hop lines")
 
 map("<ESC>", cmd "noh", "no highlight")
+map(
+ "<F11>",
+ function() 
+   if vim.g.neovide then
+     vim.g.neovide_fullscreen = not vim.g.neovide_fullscreen 
+   end
+ end,
+   "neovide fullscreen"
+)
 
-map("<C-n>", cmd "NvimTreeToggle", "toggle nvimtree")
+map("<C-b>", cmd "NvimTreeToggle", "toggle nvimtree")
 map("<D-=>", utils.focus_nvim_tree("<Esc>"), "focus nvimtree")
 
 map("<leader>t", cmd "ToggleTerm", "toggle terminal")
@@ -135,7 +144,7 @@ map(
   "redo"
 )
 
-map("<D-a>", "ggVG", "select whole file")
+map("<C-a>", "ggVG", "select whole file")
 map("<D-M-BS>", "<S-s>", "delete line")
 map("<D-BS>", '"_diw', "delete word")
 
