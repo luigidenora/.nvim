@@ -274,13 +274,10 @@ lazy.setup {
         }
       end
 
-      local thingy = io.popen('echo "$(date +%a) $(date +%d) $(date +%b)" | tr -d "\n"')
-      local date = thingy:read("*a")
-      thingy:close()
-
+      local date = os.date("%a %d %b")  -- Formats date as 'DayAbbr MonthDay MonthAbbr'
       local heading = {
         type = "text",
-        val = "· Today is " .. date .. " ·",
+        val = "· " .. date .. " ·",
         opts = {
           position = "center",
           hl = "Folded"
@@ -290,9 +287,11 @@ lazy.setup {
       local alpha = require("alpha")
       require("alpha.term")
 
+      local config_path = vim.fn.has("win32") == 1 and "sh "..vim.fn.expand("$LOCALAPPDATA") or vim.fn.expand("$HOME") .. "/.config"
+
       local terminal = {
         type = "terminal",
-        command = vim.fn.expand("$HOME") .. "/.config/nvim/lua/lazy/thisisfine.sh",
+        command = config_path .. "/nvim/lua/lazy/thisisfine.sh",
         width = 46,
         height = 25,
         opts = {
@@ -1092,7 +1091,25 @@ lazy.setup {
           delete = {hl = "DiffDelete", text = "", numhl = "GitSignsDeleteNr"},
           topdelete = {hl = "DiffDelete", text = "‾", numhl = "GitSignsDeleteNr"},
           changedelete = {hl = "DiffChangeDelete", text = "~", numhl = "GitSignsChangeNr"}
-        }
+        },
+        current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+        current_line_blame_opts = {
+          virt_text = true,
+          virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
+          delay = 1000,
+          ignore_whitespace = false,
+        },
+        current_line_blame_formatter_opts = {
+          relative_time = false,
+        },  
+        preview_config = {
+          -- Options passed to nvim_open_win
+          border = 'single',
+          style = 'minimal',
+          relative = 'cursor',
+          row = 0,
+          col = 1
+        },
       }
     end
   },
