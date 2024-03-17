@@ -516,7 +516,7 @@ lazy.setup {
           adaptive_size = false,
           centralize_selection = false,
           preserve_window_proportions = true,
-          side = "right",
+          side = "left",
           width = 38
         },
         git = {
@@ -1049,7 +1049,7 @@ lazy.setup {
         start_in_insert = true,
         close_on_exit = true,
         auto_scroll = true,
-        shell = vim.o.shell,
+        shell = "pwsh.exe",
         direction = "horizontal",
         float_opts = {
           border = "double",

@@ -46,7 +46,7 @@ map("<leader>h", cmd "split", "horizontal split")
 map("<leader>c", cmd "close", "close split")
 
 map(
-  "<D-s>",
+  "<C-s>",
   function()
     if is_default_buffer() then
       vim.api.nvim_command("write!")
@@ -56,7 +56,7 @@ map(
 )
 
 map_with_visual(
-  "<D-F>",
+  "<C-F>",
   function()
     local mode = vim.fn.mode()
     if mode == "v" or mode == "V" then
@@ -176,7 +176,7 @@ map(
   "delete line"
 )
 
-map("<D-f>", cmd "Telescope live_grep", "grep files")
+map("<C-f>", cmd "Telescope live_grep", "grep files")
 
 map("<D-C-Right>", cmd "vertical resize +5", "resize split vertically")
 map("<D-C-Left>", cmd "vertical resize -5", "resize split vertically")
@@ -189,7 +189,7 @@ map("<D-S-Down>", "<C-w>j", "window down")
 map("<D-S-Up>", "<C-w>k", "window up")
 
 map(
-  "<D-/>",
+  "<C-/>",
   function()
     vim.api.nvim_input("gcc")
   end,
@@ -198,7 +198,7 @@ map(
 -- map("<D-S-Down>", "<Plug>GoNMLineDown", "move line down")
 -- map("<D-S-Up>", "<Plug>GoNMLineUp", "move line up")
 map(
-  "<D-d>",
+  "<C-d>",
   function()
     vim.api.nvim_input("*``cgn")
   end,
@@ -234,7 +234,7 @@ map(
 )
 
 map(
-  "<D-.>",
+  "<C-.>",
   function()
     if is_default_buffer() then
       local menu = require("pickers.code-action")
@@ -277,7 +277,7 @@ map(
 -- )
 
 map_with_visual(
-  "<D-p>",
+  "<C-p>",
   function()
     local bufname = vim.fn.expand "%"
 
@@ -377,7 +377,7 @@ map(
 )
 
 map(
-  "<D-CR>",
+  "<C-e>",
   function()
     if is_default_buffer() then
       local menu = require("pickers.harpoon")
@@ -387,7 +387,7 @@ map(
 )
 
 map(
-  "<leader>la",
+  "<leader>a",
   function()
     local harpoon = require("harpoon")
     harpoon:list():append()
@@ -403,7 +403,7 @@ map(
 )
 
 map(
-  "<leader>ld",
+  "<leader>d",
   function()
     local harpoon = require("harpoon")
     harpoon:list():remove()

@@ -145,19 +145,30 @@ end
 function TimeTracker:__set_start_time()
   vim.schedule(
     function()
-      local total = fn.trim(vim.fn.system('timew | grep "Total\\s*[0-9:]*" | sed "s/Total\\s*//g"'))
-      local tag = fn.trim(vim.fn.system('timew | grep -o \'Tracking\\s*"[^"]*\' | sed \'s/Tracking "//g\''))
+      local handle = io.popen('timew', 'r')
+      local output = handle:read("*a")
+      handle:close()
+
+      local total = output:match("Total%s*([0-9]+:[0-9]+:[0-9]+)")
+      local tag = output:match("Tracking%s*(%S+)")
 
       self.start_time = -1
-      self.entry_tag = tag
+      self.entry_tag = tag or ""
 
-      if #total > 0 then
+      if total then
         local hours, minutes, seconds = total:match("(%d+):(%d+):(%d+)")
-        local total_seconds = tonumber(hours) * 3600 + tonumber(minutes) * 60 + tonumber(seconds)
-        self.start_time = os.time() - total_seconds
+        print (hours, minutes, seconds)
+        if hours and minutes and seconds then 
+          local total_seconds = tonumber(hours) * 3600 + tonumber(minutes) * 60 + tonumber(seconds)
+          self.start_time = os.time() - total_seconds
+        else
+          print("Error in the time parsing: no valid format.")
+        end
+      else
+        print("No total time found.")
       end
     end
-  )
+)
 end
 
 function TimeTracker:__save_last_command(cmd, args, type)
