@@ -77,6 +77,38 @@ M.dev = {
     icon = "",
     name = "toml"
   },
+  ["component.ts"] = {
+    icon = "",
+    name = "AngularComponent",
+  },
+  ["service.ts"] = {
+    icon = "",
+    name = "AngularService",
+  },
+  ["directive.ts"] = {
+    icon = "",
+    name = "AngularDirective",
+  },
+  ["pipe.ts"] = {
+    icon = "",
+    name = "AngularPipe",
+  },
+  ["module.ts"] = {
+    icon = "",
+    name = "AngularModule",
+  },
+  ["angular.json"] = {
+    icon = "",
+    name = "AngularJson",
+  },
+  js = {
+    icon = "",
+    name = "js",
+  },
+  ["tsconfig.*%.json"] = {
+    icon = "ﯤ",
+    name = "tsconfig"
+  },
   ts = {
     icon = "ﯤ",
     name = "ts"

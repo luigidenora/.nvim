@@ -1412,7 +1412,7 @@ lazy.setup {
         autotag = {
           enable = true
         },
-        context_commentstring = {
+        td_context_commentstring = {
           enable = true,
           enable_autocmd = false,
           config = {
@@ -1475,12 +1475,14 @@ lazy.setup {
           vim.opt_local.comments = [[sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://]]
           vim.opt_local.commentstring = [[//%s]]
 
-          require("nvim_comment").setup {
+          require('nvim_comment').setup({
             create_mappings = true,
             hook = function()
-              require("ts_context_commentstring.internal").update_commentstring()
+              if vim.api.nvim_buf_get_option(0, "filetype") == "vue" then
+                require("ts_context_commentstring.internal").update_commentstring()
+              end
             end
-          }
+          })
         end
       }
     }

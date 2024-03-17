@@ -17,7 +17,7 @@ return {
     fg = colors.blue["300"]
   },
   DevIconhtml = {
-    fg = colors.pink["200"]
+    fg = colors.orange["600"]
   },
   DevIconjpeg = {
     fg = colors.purple["500"]
@@ -55,8 +55,32 @@ return {
   DevIcontoml = {
     fg = colors.blue["300"]
   },
+  DevIcontsconfig = {
+    fg = colors.blue["100"]
+  },
   DevIconts = {
-    fg = colors.blue["300"]
+    fg = colors.blue["400"]
+  },
+  DevIconAngularComponent = {
+    fg = colors.blue["500"]
+  },
+  DevIconAngularService = {
+    fg = colors.yellow["400"]
+  },
+  DevIconAngularDirective = {
+    fg = colors.purple["400"]
+  },
+  DevIconAngularPipe = {
+    fg = colors.green["700"]
+  },
+  DevIconAngularModule = {
+    fg = colors.red["500"]
+  },
+  DevIconAngularJson = {
+    fg = colors.red["500"]
+  },
+  DevIconjs = {
+    fg = colors.yellow["700"]
   },
   DevIconttf = {
     fg = colors.grey["50"]
