@@ -40,6 +40,7 @@ lazy.setup {
           -- web dev
           "css-lsp",
           "html-lsp",
+          "angular-language-server",
           "typescript-language-server",
           "rescript-lsp",
           "json-lsp",

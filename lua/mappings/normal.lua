@@ -32,7 +32,6 @@ map(
 )
 
 map("<C-b>", cmd "NvimTreeToggle", "toggle nvimtree")
-map("<D-=>", utils.focus_nvim_tree("<Esc>"), "focus nvimtree")
 
 map("<leader>t", cmd "ToggleTerm", "toggle terminal")
 map("<leader>1", cmd "ToggleTerm 1", "toggle terminal #1")
@@ -44,16 +43,6 @@ map("<leader>s", cmd "SwapSplit", "swap split")
 map("<leader>v", cmd "vsplit", "vertical split")
 map("<leader>h", cmd "split", "horizontal split")
 map("<leader>c", cmd "close", "close split")
-
-map(
-  "<C-s>",
-  function()
-    if is_default_buffer() then
-      vim.api.nvim_command("write!")
-    end
-  end,
-  "save file"
-)
 
 map_with_visual(
   "<C-F>",
@@ -67,116 +56,20 @@ map_with_visual(
   end,
   "find & replace"
 )
-
-map(
-  "<D-[>",
-  function()
-    local is_tabline_hidden = vim.api.nvim_eval("&showtabline") == 0
-
-    if is_tabline_hidden then
-      harpoon:list():prev()
-    else
-      buffers.prev_buffer()
-    end
-  end,
-  "goto prev buffer"
-)
-map(
-  "<D-]>",
-  function()
-    local is_tabline_hidden = vim.api.nvim_eval("&showtabline") == 0
-
-    if is_tabline_hidden then
-      harpoon:list():next()
-    else
-      buffers.next_buffer()
-    end
-  end,
-  "goto next buffer"
-)
-map(
-  "<D-w>",
-  function()
-    local win_amount = #vim.api.nvim_tabpage_list_wins(0)
-    local is_tree_visible = require("nvim-tree.view").is_visible()
-    local is_mind_visible = vim.g.mind_is_visible
-
-    win_amount = is_tree_visible and win_amount - 1 or win_amount
-    win_amount = is_mind_visible and win_amount - 1 or win_amount
-
-    if win_amount == 1 then
-      buffers.close_buffer()
-    else
-      vim.cmd("close")
-    end
-  end,
-  "close buffer or split"
-)
-
-map("<S-Tab>", "<<_", "unindent")
-map("<Tab>", ">>_", "indent")
-
-map("<D-c>", "yy", "copy line")
-map("<D-x>", "dd<Up>", "cut line")
-
-map("<D-v>", "gp", "paste")
-
-map(
-  "<D-z>",
-  function()
-    utils.preserve_cursor_position(
-      function()
-        vim.api.nvim_input("u")
-      end
-    )
-  end,
-  "undo"
-)
-map(
-  "<D-r>",
-  function()
-    utils.preserve_cursor_position(
-      function()
-        vim.api.nvim_input("<C-r>")
-      end
-    )
-  end,
-  "redo"
-)
-
 map("<C-a>", "ggVG", "select whole file")
-map("<D-M-BS>", "<S-s>", "delete line")
-map("<D-BS>", '"_diw', "delete word")
 
-map("<M-Left>", "b", "move cursor left")
-map("<M-Right>", "e", "move cursor right")
-map("<M-Up>", "5k", "move cursor up")
-map("<M-Down>", "5j", "move cursor down")
-map("<D-Up>", "1G", "beginning of file")
-map("<D-Down>", "G", "end of file")
-map("<D-Left>", "^", "beginning of line")
-map("<D-Right>", "$", "end of line")
-map("<D-n>", cmd "enew", "new buffer")
+map("<C-n>", cmd "enew", "new buffer")
 
-map("<D-L>", "<Plug>(dial-increment)", "dial inc")
-map("<D-K>", "<Plug>(dial-decrement)", "dial dec")
-
+map("<C-S-f>", cmd "Telescope live_grep", "grep files")
 map(
-  "<D-S-BS>",
+  "<C-f>",
   function()
-    lastline = vim.api.nvim_eval('line(".") == line("$")')
-
-    if lastline == 1 then
-      vim.api.nvim_input('"_dd')
-      return
-    end
-
-    vim.api.nvim_input('"_dd<Up>')
-  end,
-  "delete line"
+    require("telescope.builtin").current_buffer_fuzzy_find {
+      entry_maker = telescope_ui.gen_from_buffer_lines()
+    }
+  end
 )
-
-map("<C-f>", cmd "Telescope live_grep", "grep files")
+map("<C-p>", cmd "Telescope find_files", "find file by name")
 
 map("<D-C-Right>", cmd "vertical resize +5", "resize split vertically")
 map("<D-C-Left>", cmd "vertical resize -5", "resize split vertically")
@@ -206,15 +99,7 @@ map(
 )
 
 map(
-  "<D-g>",
-  function()
-    vim.api.nvim_input(":%s/")
-  end,
-  "find and replace"
-)
-
-map(
-  "<D-1>",
+  "<C-k>",
   function()
     vim.lsp.buf.hover()
   end,
@@ -222,7 +107,7 @@ map(
 )
 
 map(
-  "<D-;>",
+  "<C-k>",
   function()
     vim.diagnostic.open_float(
       {
@@ -246,7 +131,7 @@ map(
 )
 
 map(
-  "<D-m>",
+  "<C-m>",
   function()
     if is_default_buffer() then
       local menu = require("pickers.marks")
@@ -255,29 +140,8 @@ map(
   end,
   "marks"
 )
-
--- map(
---   "<D-0>",
---   function()
---     local cwd = vim.fn.getcwd()
-
---     vim.api.nvim_input(":wa<CR>")
-
---     if not (cwd == "/") then
---       vim.api.nvim_input(":SaveSession<CR>")
---     end
-
---     utils.schedule(
---       function()
---         require("workspaces").open()
---       end
---     )
---   end,
---   "save session and open workspace"
--- )
-
 map_with_visual(
-  "<C-p>",
+  "<C-S-p>",
   function()
     local bufname = vim.fn.expand "%"
 
@@ -286,7 +150,8 @@ map_with_visual(
       bufname,
       {
         ["NvimTree_1"] = function()
-          return require("pickers.nvim-tree")
+          -- return require("pickers.nvim-tree")
+          return require("pickers.command-palette")
         end,
         ["mind"] = function()
           return require("pickers.mind")
@@ -331,25 +196,6 @@ map(
   end
 )
 
-map(
-  "<D-o>",
-  function()
-    if is_default_buffer() then
-      local menu = require("pickers.glance")
-      require("ui.picker").make(menu)
-    end
-  end
-)
-
-map(
-  "<D-0>",
-  function()
-    if is_default_buffer() then
-      local menu = require("pickers.terminal")
-      require("ui.picker").make(menu)
-    end
-  end
-)
 
 map(
   "<leader>j",
@@ -364,15 +210,6 @@ map(
         mind_commands.commands.move_above(args)
       end
     )
-  end
-)
-
-map(
-  "/",
-  function()
-    require("telescope.builtin").current_buffer_fuzzy_find {
-      entry_maker = telescope_ui.gen_from_buffer_lines()
-    }
   end
 )
 
