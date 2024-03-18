@@ -150,8 +150,8 @@ map_with_visual(
       bufname,
       {
         ["NvimTree_1"] = function()
-          -- return require("pickers.nvim-tree")
-          return require("pickers.command-palette")
+          return require("pickers.nvim-tree")
+          -- return require("pickers.command-palette")
         end,
         ["mind"] = function()
           return require("pickers.mind")
